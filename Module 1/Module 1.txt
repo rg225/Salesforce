@@ -1,0 +1,17 @@
+Salesforce Module 1
+
+Multitenant architecture
+It means we can do many tasks on a single platform like a sales cloud, service cloud, marking cloud and whole data is stored in the single database for all customers. Here we share one resource between all of them.
+
+SObject Relationships
+SObject relationships can be categorized in 2 parts lookup and master-detail relationship.
+Master-detail relationship can be used as the parent child relationship if we delete any record form parent then related child records will automatically get deleted. 
+In the lookup relationship we just create the relationship between 2 objects, but they are not tightly coupled with each other.
+
+Formula Fields
+Formula field we can use for mathematical calculations, like if we want to calculate the age of any student then we can calculate it by using the formula field, there we have no need to calculate it manually. Even we can perform more complex calculations using this.
+
+Rollup Summary Fields
+As its name suggests it displays the result of all records from any object. Like if we want to calculate the total donation from the donation object then we can do it by using rollup and there we will use sum. Here we can also count how many people donate.
+
+
