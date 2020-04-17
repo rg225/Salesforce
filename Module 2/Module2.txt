@@ -1,0 +1,41 @@
+Question 1. Write SOQL Select all student Name,Dob,Sex where LastName starts with “S”
+Query       SELECT Name,DOB__c,Sex__c FROM Student__c WHERE LastName__c LIKE 'S%'
+
+Question 2. Select All students where ClassName starts with “X”
+Query	    SELECT Name,DOB__c,Sex__c FROM Student__c WHERE Class__r.Name LIKE 'X%'
+
+Question 3. Select all Student and ClassName
+Query       SELECT Name,DOB__c,Sex__c, Class__r.Name FROM Student__c
+
+Question 4. Select all Classes with students in every class as subquery.
+Query       Select Name ,(Select Name From Students__r ) From Class__c
+
+Question 5. Select all students where class teacher name starts with “S”
+Query       SELECT Name,DOB__c,Sex__c FROM Student__c WHERE  Class__r.ClassTeacher__r.Name LIKE 'S%'
+
+Question 6. All students where DOB > Year 2000
+Query       SELECT Name, DOB__c, Sex__c FROM Student__c where CALENDAR_YEAR(DOB__c ) > 2000
+
+Question 7. All Leads Where ModifiedDate in current month
+Query       SELECT Name FROM Lead WHERE LastModifiedDate = THIS_MONTH
+
+Question 8. All Classes with Students as subquery where student Name Starts with “S”
+Query       SELECT Name ,(SELECT Name FROM Students__r WHERE Name LIKE 'S%' ) FROM Class__c
+
+Question 9. All Teachers who have Hindi and English both subjects
+Query	   SELECT Name FROM Contact WHERE Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'English') AND Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'Hindi')
+
+Question 10. All students who have hindi or maths
+Query       SELECT Name,DOB__c,Sex__c FROM Student__c WHERE Class__c IN (SELECT Class__c FROM Teach__c WHERE Subject__c = 'Hindi' OR Subject__c = 'Maths')
+
+Question 11. Select no. of students per class
+Query       SELECT Name, NumberOfStudents__c FROM Class__c
+
+Question 12. Monthly Birthday Count of students with sorting
+Query       SELECT CALENDAR_MONTH(DOB__c), COUNT(Name) FROM Student__c GROUP BY CALENDAR_MONTH(DOB__c) 
+
+Question 13. Find all persons with name as “Joe” i.e (Teachers or Students)
+Query        FIND {Joe} IN Name Fields RETURNING Student__c(Name),Contact(Name)
+
+Question 14. Find all Male persons with name as “Joe” i.e (Teachers or Students)
+Query        FIND {Joe} IN Name Fields RETURNING Student__c (Name, Sex__c WHERE Sex__c = 'Male'), Contact(Name)
