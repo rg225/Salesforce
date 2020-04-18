@@ -23,19 +23,32 @@ Question 8. All Classes with Students as subquery where student Name Starts with
 Query       SELECT Name ,(SELECT Name FROM Students__r WHERE Name LIKE 'S%' ) FROM Class__c
 
 Question 9. All Teachers who have Hindi and English both subjects
-Query	   SELECT Name FROM Contact WHERE Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'English') AND Id IN (SELECT Teacher__c FROM Teach__c WHERE Subject__c = 'Hindi')
+Query	    SELECT Teacher__r.Name FROM Teach__c WHERE Subject__c INCLUDES ('Hindi;English')
 
 Question 10. All students who have hindi or maths
-Query       SELECT Name,DOB__c,Sex__c FROM Student__c WHERE Class__c IN (SELECT Class__c FROM Teach__c WHERE Subject__c = 'Hindi' OR Subject__c = 'Maths')
+Query       SELECT Name,DOB__c,Sex__c FROM Student__c WHERE Class__c IN (SELECT Class__c FROM Teach__c WHERE Subject__c INCLUDES ('Hindi','English'))
 
 Question 11. Select no. of students per class
-Query       SELECT Name, NumberOfStudents__c FROM Class__c
+Query       SELECT Class__r.Name, COUNT(Name) FROM Student__c GROUP BY Class__r.Name
 
 Question 12. Monthly Birthday Count of students with sorting
-Query       SELECT CALENDAR_MONTH(DOB__c), COUNT(Name) FROM Student__c GROUP BY CALENDAR_MONTH(DOB__c) 
+Query       SELECT CALENDAR_MONTH(DOB__c), COUNT(Name) FROM Student__c GROUP BY CALENDAR_MONTH(DOB__c) ORDER BY CALENDAR_MONTH(DOB__c) DESC 
 
 Question 13. Find all persons with name as “Joe” i.e (Teachers or Students)
 Query        FIND {Joe} IN Name Fields RETURNING Student__c(Name),Contact(Name)
 
 Question 14. Find all Male persons with name as “Joe” i.e (Teachers or Students)
 Query        FIND {Joe} IN Name Fields RETURNING Student__c (Name, Sex__c WHERE Sex__c = 'Male'), Contact(Name)
+
+--------------------------------------------------------------------------------------------------
+Relationship Query Limitations
+- More than 55 child to parent relationships can not be specified in a query. A custom object allows up to 25 relationships.
+- More than 20 parent to child relationships can not be specified in a query.
+- In every child to parent relationship, more than five levels can not be specified. Ex A.B.C (2 levels)
+- In parent to child relationships, we can specify only one query.
+- External objects don’t support the ORDER BY clause in relationship queries.
+
+SOSL Limits
+- The SOSL query can be up to 100000 characters(by default) but in general, if query length is more than the 10000 then no result will be returned. 
+  If query length is more than the 4000 then logical operators are removed and then the query is executed so in this case you get more results than expected.
+- SOQL Query can return maximum 2000 results
