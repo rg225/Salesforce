@@ -1,12 +1,3 @@
-Question 1:
-- Create a class and a static function which takes classId as argument and returns all names of the
-  students in that class as a list.
-- Create a function which returns a map where key is class and value is set of studentId in it.
-- Create a function which take two dates as argument and return number of working days between two
-  dates excluding both days. (Saturday and Sunday is non-working days)
-
------------------------------------------------------------------------------------------------------
-
 public class ClassStudents {
     public static List<Student__c> getAllSttudents(String classId){
         List<Student__c> listOfStudent = [SELECT Name FROM Student__c WHERE Class__r.Name=:classId];
@@ -58,15 +49,5 @@ public class ClassStudents {
                 system.debug(s.id);
             }
         }
-    }
-}
-
-
-Question 2:
-Create a class which show the list of sobjects exists in org.
---------------------------------------------------------------------
-public class ObjectsList {
-    public static list<Schema.SObjectType> listOfObjects(){
-        return Schema.getGlobalDescribe().Values();
     }
 }
