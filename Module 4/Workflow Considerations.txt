@@ -1,0 +1,22 @@
+﻿* Each workflow rule applies to a single object.
+* Workflow rules on custom objects are automatically deleted if the custom object is deleted.
+* The order in which individual actions and types of actions are executed is not guaranteed. However, field update actions are executed first, followed by other actions.
+* To create workflow rules that update case fields based on new case comments or incoming email messages, choose Case Comment or Email Message from the Select Object drop-down list; Email Message is only available if Email-to-Case or On-Demand Email-to-Case is enabled. You can only create email message workflow rules for field updates, and case comment workflow rules for field updates, email alerts, and outbound messages. For example, you can create a workflow rule so that an email marked as Is Incoming changes its case's Status from Closed to New.
+* Changes you make to records while using Connect Offline are evaluated by workflow rules when you synchronize.
+* Salesforce processes rules in the following order:
+   1. Validation rules
+   2. Assignment rules
+   3. Auto-response rules
+   4. Workflow rules (with immediate actions)
+   5. Escalation rules
+* If a lookup field references a record that has been deleted, Salesforce clears the value of the lookup field by default. Alternatively, you can choose to prevent records from being deleted if they’re in a lookup relationship.
+* If you create workflow rules to replace any Apex triggers, make sure you delete those Apex triggers when you activate the equivalent workflow rules. Otherwise, both Apex triggers and workflow rules will fire and cause unexpected results, such as overwritten field updates or redundant email messages.
+
+
+When Do Workflow Rules Get Triggered?
+* Workflow rules can be triggered any time a record is saved or created, depending on your rule criteria. However, rules created after saving records aren't triggered by those records retroactively.
+* Workflow rules are triggered when a standard or custom object in a master-detail relationship is re-parented, even if the object's evaluation criteria is set to Evaluate the rule when a record is: created, and any time it’s edited to subsequently meet criteria.
+* Saving or creating records can trigger more than one rule.
+* Workflow rules trigger automatically and are invisible to the user. Alternatively, approval processes allow users to submit records for approval.
+* If your organization uses multiple languages, enter filter values in your individual language. You can add up to 25 filter criteria, of up to 255 characters each.
+When you use picklists to specify filter criteria, the selected values are stored in the organization's default language. If you edit or clone existing filter criteria, first set the Default Language on the Company Information page to the same language that was used to set the original filter criteria. Otherwise, the filter criteria may not be evaluated as expected.

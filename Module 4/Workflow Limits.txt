@@ -1,0 +1,21 @@
+
+Total rules across objects 2,000
+Total rules per object 500
+Active rules per object 50
+Time triggers per workflow rule 10
+Immediate actions per workflow rule 40
+Time-dependent actions per time trigger 40
+Workflow emails per day :1,000 per standard Salesforce license (15 in Developer Edition); 2,000,000 per org
+Workflow time triggers per hour: 1,000
+
+For each workflow rule, you can have
+10 time triggers
+40 immediate actions
+40 time-dependent actions per time trigger
+
+For both immediate and time-dependent actions in one workflow rule,
+there can be no more than:
+10 email alerts
+10 tasks
+10 field updates
+10 outbound messages

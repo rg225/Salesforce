@@ -1,0 +1,17 @@
+﻿For each approval process, you can have a maximum of the following:
+* 30 steps per process
+* 25 approvers per step
+
+
+• Each organization can have the following limitations:
+* 300 approval processes per object
+* 1,000 approval processes per organization
+
+
+• An approval process's e-mail limit per day is as follows:
+* 1,000 per Salesforce standard license
+* 200,000 per organization           
+
+
+We cannot delete active approval processes. If we want to delete them, we will first have to inactivate the approval process and make sure no records have been submitted for approval. If any records have been submitted, delete them and remove them from the recycle bin.
+Once an approval process is activated, you cannot add, delete, or change the order of the steps or change the reject or skip comportment of that process, even if you make the process inactive.

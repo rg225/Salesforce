@@ -1,0 +1,99 @@
+﻿Process limits and considerations 
+
+
+* Process Limits :
+Active process per object can be up to 50
+Total process up to 4000 and active can be up to 2000
+2000 criteria nodes and actions are evaluated at run time for one process
+1000 per day email limit for standard and 15 for developer and overall org limit is 2000000
+
+
+Process name can have 255 word and API can have 79 words
+Total version can be 50 and criteria nodes up to 200 for a process
+
+
+* Process Usage-Based Entitlements:
+Maximum pause and waiting flow interviews can be up to 50000
+
+
+* Order of execution 
+1  Validation rules
+2 Assignment rules
+3 Auto response rules
+4 Workflow rules and processes
+
+
+* Process in evaluated when a record is saved and created
+* Processes can reevaluate records up to five times in one save operation
+* A record change can trigger more than one process. You can’t determine which process starts first.
+
+
+* Processes Don’t Evaluate Record Changes When:
+Picklist, Address, division fields are mass updated
+
+
+* Best practices 
+If one object have one process and some other workflow then we can not predict output so deactivate workflow rules before activating process .
+Have only one record process for per object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Objects
+Process Builder doesn’t support:
+* Deprecated custom objects
+* Signup Request — unsupported in schedules only
+* Social Post
+* Social Persona
+External Objects
+* External objects aren’t supported in record-change processes.
+* When you create or update external object records, don’t set values for indirect lookup relationships that map to a different data type on the external system. For example, don’t set a value for a Text indirect lookup relationship that maps to a Date value on the external system.
+Custom Fields
+* Process Builder doesn’t support custom fields of type File.
+* If a process references a custom field:
+   * You can’t delete the field.
+   * If you change the field type or name, the process breaks.
+   * If you change the field label, the process doesn’t break. But it still uses the original label.
+Duplicate Rules
+If a duplicate is found when a process tries to create or update a record, the process fails.
+
+
+Process Formula Limitations
+All formulas that are used in a criteria node must:
+* Return true or false. If the formula returns true, the associated actions are executed.
+* Not contain more than 3,000 characters.
+* Not contain an unsupported function.
+* Reference the process trigger object for that process.
+* Use the correct capitalization when referring to the process trigger object.
+Process Schedule Limitations
+* If an action group contains scheduled actions, you can’t continue evaluating the next criteria in your process after executing those actions.
+* SignupRequest processes don’t support scheduled actions.
+* Field-based schedules can’t reference a Date or Date/Time field that contains automatically derived functions, such as TODAY or NOW.
+* Field-based schedules can’t reference a formula field that includes related-object merge fields.
+* If you add a schedule for 0 Days Before a date, when you later reopen the process, the schedule changes to 0 Days After the date. The process still executes at the specified time.
+Process Builder Design Considerations:
+* Be careful while creating the processes are not going into the infinite loop.
+* If you create a Process instead of Existing Workflow or Apex Triggers, Make sure that you deleted the existing workflow or Apex Trigger otherwise the unexpected results might occur.
+* The Length of Process Name must be within 255 characters.
+* The Length of Process’s API Name must be within 77 characters.
+* A Process can have maximum of 200 Criteria Nodes and can be associated for a single object.
+* Actions are executed in the order in which they appear in the process builder
+* Cannot Activate the Process if any Process contains “Email Alerts” Action and Scheduled actions within the process.
+* Process Builder doesn’t support the “File Type” custom fields.
+* If the Message in “Chatter Post” Action starts with the field reference like {![Account].name}, Then the “Chatter Post” action may fail to save.
+* A Process Can have up to 50 Versions but only single Version can be in “Active”.
+
+
+*

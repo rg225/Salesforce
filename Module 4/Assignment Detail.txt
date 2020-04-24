@@ -1,0 +1,56 @@
+﻿Assignment Process:
+
+
+* Click the gear icon from the top right corner of the window and then select setup
+* Type Schema builder in the Quick find box (See in the left side) and then click on the schema builder
+* In the left panel click clear all
+* Now click on the element and drag the object and drop it to the canvas
+* Enter the Details of Loan field its plural form and save it.
+* Repeat the same process for the other object which is city Manager
+* So now we have created the 2 objects.
+* * Now drag and drop following elements in the city manager object
+* Text -> label city 
+* Lookup field -> Label Manager
+
+
+* Now drag and drop following elements in the Loan object
+* Text -> Address
+* Currency -> Amount
+* Master-Detail -> City -> City Manager
+* Lookup -> Loan Manager  -> User
+
+
+* Click on home and search tabs in the quick find
+* Tabs -> custom object tabs (new)   -> object (Loan) -> tab style (any icon)->next ->next -> save
+* custom object tabs (new)   -> object (citiManager) -> tab style (any icon)->next ->next -> save
+
+
+* Go to the Home page of setup
+* Search Approval process in the quick find
+* Manage approval process for loan
+* Approval Process ->  Create new approval process-> Use jump start wizard -> 
+* Give any name and go to the specific Entry criteria
+* Field (Loan:Amount),  operator (Greater than), Value (15000)
+* Select Approver -> Automatic assign to approver -> related user -> loan manager -> save- > View approval process detail page
+* Final approval for action -> Edit -> Unlock the record for editing and save it-> Activate
+
+
+* Go to the Home page of setup
+* Search Process builder in the quick find
+* Process Builder-> New -> Any Process Name -> Process Start when a record change
+* Add Object -> find an object (Loan) -> When a record is created
+* Add Criteria -> give nay name -> condition are met
+* Field (Amount), Operator (Greater than), type(currency), value(15000)  and save
+* Activate the process builder
+
+
+* Trigger
+* Developer Console -> New Apex Trigger and Give any name and select loan__c object->save
+* Add a trigger before insert and set the loan manager data according to the city manager’s field manager and save it
+
+
+* Go to the sales tab and select city manage and create a dummy  entry)
+* Select the loan tab and create a dummy entry here you have no need feel the manage field it will automatically populate when you save this entry.
+
+
+* Now if amount is greater than the 15000 then manage will get an approval email.
