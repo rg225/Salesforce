@@ -1,7 +1,12 @@
+/**
+ * Create a new PickList “Custom Status” in Class object.(New,Open,Close,Reset) values. When this
+ * field changed and value is “Reset” now then delete all associated students with related Class.
+ */
+
 trigger ClassCustomStatus on Class__c (after update, before update) {
     
     // This is to update the NumberOfStudents__c field
-    if(trigger.isBefore){
+    if(Trigger.isBefore){
         for(Class__c cls : Trigger.new){
             if(cls.Custom_Status__c == 'Reset'){
                 // Set my count to zero because all students will geting deleted
@@ -23,7 +28,7 @@ trigger ClassCustomStatus on Class__c (after update, before update) {
             }
         }
         // fetch list of related Student in this class
-        list<student__C> studentList = [SELECT id FROM Student__c WHERE class__c IN:classSet];
+        List<student__C> studentList = [SELECT id FROM Student__c WHERE Class__c IN:classSet];
         Delete studentList;
     }
     

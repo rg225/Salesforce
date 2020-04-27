@@ -5,7 +5,7 @@
 
 trigger StageOfOpportunity on Opportunity (before update) {
 
-    // to traverse the bulky upfates
+    // to traverse the bulky update
     for(Opportunity opp : Trigger.new){
 
         if(opp.StageName == 'CLOSED WON' || opp.StageName == 'CLOSED LOST'){
