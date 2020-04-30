@@ -10,7 +10,8 @@ public class TestStageOfOpportunity {
         // Creating test data for opportunity
         List<Opportunity> Opportunities = new List<Opportunity>();
        	for(Integer i = 0; i < 20; i++){
-   			Opportunity opp = new Opportunity(Name='Opportunity Test',StageName='Prospecting',CloseDate=System.today().addMonths(1));
+            Date dt = System.today().addMonths(1);
+   			Opportunity opp = new Opportunity(Name = 'Opportunity Test', StageName = 'Prospecting', CloseDate = dt);
             Opportunities.add(opp);
        	}
        	insert Opportunities;
@@ -18,7 +19,7 @@ public class TestStageOfOpportunity {
         // Perform test
         Test.startTest();
         // Change the stage from Prospecting to closed won
-        for(Integer i = 0;i <20 ; i++){
+        for(Integer i = 0 ; i <20 ; i++){
             Opportunities[i].StageName = 'CLOSED WON';
         }
         Database.SaveResult[] results = Database.update(Opportunities, false);
@@ -47,7 +48,8 @@ public class TestStageOfOpportunity {
         // Creating test data for opportunity
         List<Opportunity> Opportunities = new List<Opportunity>();
        	for(Integer i = 0; i < 20; i++){
-   			Opportunity opp = new Opportunity(Name='Opportunity Test',StageName='CLOSED WON',CloseDate=System.today().addMonths(1));
+            Date dt = System.today().addMonths(1);
+   			Opportunity opp = new Opportunity(Name = 'Opportunity Test', StageName = 'Prospecting', CloseDate = dt);
             Opportunities.add(opp);
        	}
        	insert Opportunities;
@@ -69,7 +71,8 @@ public class TestStageOfOpportunity {
         // Fetch data and varify the close date
         List<Opportunity> oppList = [SELECT CloseDate FROM Opportunity];
         for(Opportunity opp : oppList) {
-            System.assertEquals(System.today().addMonths(1), opp.CloseDate);
+            Date dt = System.today().addMonths(1);
+            System.assertEquals(dt, opp.CloseDate);
         }
         
     }

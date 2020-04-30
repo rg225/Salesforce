@@ -4,7 +4,6 @@ public class TestClassDeletion {
     /***
      * This test case is with 3 females. 2 are in same class and one in the other class.
      * so more then 1 females class will not be deleted, after deletion we will see 1 class
-     * one class is not deleted
      */
     @isTest
     static void classDeletionWith3Female(){
@@ -26,7 +25,7 @@ public class TestClassDeletion {
         Test.stopTest();
         
         // To check the number of current classes
-        List<Class__c> cls = [SELECT id FROM Class__c];
+        List<Class__c> cls = [SELECT Id FROM Class__c];
         system.assertEquals(1, cls.size());
     }
     
@@ -55,7 +54,7 @@ public class TestClassDeletion {
         Test.stopTest();
         
         // To check the number of current classes
-        List<Class__c> cls = [SELECT id FROM Class__c];
+        List<Class__c> cls = [SELECT Id FROM Class__c];
         
         //system.debug(cls.size());
         system.assertEquals(20, cls.size());
@@ -75,13 +74,19 @@ public class TestClassDeletion {
         
         // Perform test
         Test.startTest();
-        Database.DeleteResult[] result = Database.delete(classes, false);
+        Database.DeleteResult[] results = Database.delete(classes, false);
         Test.stopTest();
         
         // To check the number of current classes
-        List<Class__c> cls = [SELECT id FROM Class__c];
+        List<Class__c> cls = [SELECT Id FROM Class__c];
         
         //system.debug(cls.size());
         system.assertEquals(0, cls.size());
+        
+        for(Database.DeleteResult result : results){
+            System.assertNotEquals('Cannot delete Class because in this class more than 1 girls exist.',
+                             result.getErrors()[0].getMessage());
+        }
+        
     }
 }
