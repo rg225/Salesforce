@@ -35,7 +35,7 @@ public class TestRestrictHindiTeacher {
     }
     
     /**
-     * Here all teacher teaches hindi so no teacher will getting  inserted
+     * Here all teacher teaches hindi so no teacher will getting  inserted inside the database
      */
     @isTest
     static void restrictHindiTeacherTestWhenAllTeachsHindi(){
