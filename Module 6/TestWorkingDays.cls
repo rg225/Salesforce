@@ -26,7 +26,7 @@ public class TestWorkingDays {
         Integer workDays = WorkingDays.numberOfWorkingDays(startDate, endDate);
         
         // Compare actual with expected
-        system.assertEquals(-1, workDays);
+        system.assertEquals(0, workDays);
         
     }
     
@@ -41,7 +41,7 @@ public class TestWorkingDays {
         Integer workDays = WorkingDays.numberOfWorkingDays(startDate, endDate);
         
         // Compare actual with expected
-        system.assertEquals(-1, workDays);
+        system.assertEquals(0, workDays);
         
     }
 }
