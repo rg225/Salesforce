@@ -13,7 +13,7 @@ public class TestOpportunityManager {
         
         List<Opportunity> opps = new List<Opportunity>();
         for(Integer i = 0; i < 10; i++){
-            Opportunity opp = new Opportunity(Name = 'Name' + i, CloseDate = system.Date.today(), StageName = 'Closed Won',
+            Opportunity opp = new Opportunity(Name = 'Name' + i, CloseDate = System.Date.today(), StageName = 'Closed Won',
                                             BillToContact__c = cont.Id);
             opps.add(opp);
         }
@@ -25,7 +25,7 @@ public class TestOpportunityManager {
         // Compare the manage field of all opportunity
         List<Opportunity> oppList = [SELECT Manager__c FROM Opportunity];
         for(Integer i = 0; i < 10; i++){
-            system.assertEquals(acct.Id, oppList[i].Manager__c);
+            System.assertEquals(acct.Id, oppList[i].Manager__c);
         }
     }
     
@@ -41,7 +41,7 @@ public class TestOpportunityManager {
         
         List<Opportunity> opps = new List<Opportunity>();
         for(Integer i = 0; i < 10; i++){
-            Opportunity opp = new Opportunity(Name = 'Name' + i, CloseDate = system.Date.today(), StageName = 'Closed Won');
+            Opportunity opp = new Opportunity(Name = 'Name' + i, CloseDate = System.Date.today(), StageName = 'Closed Won');
             opps.add(opp);
         }
         insert opps;
@@ -53,7 +53,7 @@ public class TestOpportunityManager {
         // Manage field will not updated
         List<Opportunity> oppList = [SELECT Manager__c FROM Opportunity];
         for(Integer i = 0; i < 10; i++){
-            system.assertEquals(null, oppList[i].Manager__c);
+            System.assertEquals(null, oppList[i].Manager__c);
         }
     }
 }

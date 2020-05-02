@@ -31,11 +31,11 @@ public class TestRestrictHindiTeacher {
         
         // fetch data from teach to check how many records are getting inserted
         List<Teach__c> teach= [SELECT Id FROM Teach__c];
-        system.assertEquals(18, teach.size());
+        System.assertEquals(18, teach.size());
     }
     
     /**
-     * Here all teacher teaches hindi so no teacher will getting  inserted inside the database
+     * Here all teacher teaches hindi so no teacher will getting  inserted
      */
     @isTest
     static void restrictHindiTeacherTestWhenAllTeachsHindi(){
@@ -57,7 +57,7 @@ public class TestRestrictHindiTeacher {
         
         // Fetch the teach records
         List<Teach__c> teach = [SELECT Id FROM Teach__c];
-        system.assertEquals(0, teach.size());
+        System.assertEquals(0, teach.size());
         
         for(Database.SaveResult result : results){
             System.assertEquals('Sorry Hindi teachers can not create the account',
@@ -97,7 +97,7 @@ public class TestRestrictHindiTeacher {
         // fetch data and compare using assertEquals
         List<Teach__c> teach= [SELECT Id FROM Teach__c];
         
-        system.assertEquals(0, teach.size());
+        System.assertEquals(0, teach.size());
         for(Database.SaveResult result : results){
             System.assertEquals('Sorry Hindi teachers can not create the account',
                              result.getErrors()[0].getMessage());

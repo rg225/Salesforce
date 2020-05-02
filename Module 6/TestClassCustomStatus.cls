@@ -19,11 +19,11 @@ public class TestClassCustomStatus {
         Database.SaveResult result = Database.update(newClass, false);
         Test.stopTest();
      
-        system.assert(result.isSuccess());      
+        System.assert(result.isSuccess());      
         
         // fetch number of student in class
         List<Student__c> student = [SELECT id FROM Student__c];
-        system.assertEquals(0,student.size());
+        System.assertEquals(0,student.size());
     } 
     
     /** 
@@ -43,11 +43,11 @@ public class TestClassCustomStatus {
         Database.SaveResult result = Database.update(newClass, false);
         Test.stopTest();
      
-        system.assert(result.isSuccess());      
+        System.assert(result.isSuccess());      
         
         // fetch number of student in class
         List<Student__c> student = [SELECT id FROM Student__c];
-        system.assertEquals(1,student.size());
+        System.assertEquals(1,student.size());
     } 
     
 }

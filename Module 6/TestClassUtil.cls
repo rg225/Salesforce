@@ -20,7 +20,7 @@ public class TestClassUtil {
         
         // Comapre results
         for(Integer i = 0; i < 10; i++){
-            system.assertEquals(Students[i].Id, studentList[i].Id);
+            System.assertEquals(Students[i].Id, studentList[i].Id);
         }
     }
     
@@ -46,10 +46,10 @@ public class TestClassUtil {
             // to traverse the actual 'students' list
             Integer i = 0;
 			for(Id stuId : classNameWithStudents.get(classNameWithStudent )){
-                system.assertEquals(Students[i].Id, stuId);
+                System.assertEquals(Students[i].Id, stuId);
                 i++;
             }
-            system.assertEquals(cls.Name, classNameWithStudent);
+            System.assertEquals(cls.Name, classNameWithStudent);
         }
     }
 }

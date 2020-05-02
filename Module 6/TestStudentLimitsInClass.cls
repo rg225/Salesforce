@@ -28,7 +28,7 @@ public class TestStudentLimitsInClass {
         
         // fetech the data and compare
         Class__c clss= [SELECT Id,MyCount__c FROM Class__c WHERE Name = 'Class0'];
-        system.assertEquals(5, clss.MyCount__c);
+        System.assertEquals(5, clss.MyCount__c);
     }
     
     /**
@@ -58,6 +58,6 @@ public class TestStudentLimitsInClass {
         
         // fetech the data and compare
         Class__c cls= [SELECT Id,MyCount__c FROM Class__c WHERE Name = 'Class0'];
-        system.assertEquals(25, cls.MyCount__c);
+        System.assertEquals(25, cls.MyCount__c);
     }
 }

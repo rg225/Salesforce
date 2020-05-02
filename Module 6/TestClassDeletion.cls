@@ -26,7 +26,7 @@ public class TestClassDeletion {
         
         // To check the number of current classes
         List<Class__c> cls = [SELECT Id FROM Class__c];
-        system.assertEquals(1, cls.size());
+        System.assertEquals(1, cls.size());
     }
     
     /***
@@ -56,8 +56,8 @@ public class TestClassDeletion {
         // To check the number of current classes
         List<Class__c> cls = [SELECT Id FROM Class__c];
         
-        //system.debug(cls.size());
-        system.assertEquals(20, cls.size());
+        //System.debug(cls.size());
+        System.assertEquals(20, cls.size());
     }
     
     /***
@@ -80,8 +80,8 @@ public class TestClassDeletion {
         // To check the number of current classes
         List<Class__c> cls = [SELECT Id FROM Class__c];
         
-        //system.debug(cls.size());
-        system.assertEquals(0, cls.size());
+        //System.debug(cls.size());
+        System.assertEquals(0, cls.size());
         
         for(Database.DeleteResult result : results){
             System.assertNotEquals('Cannot delete Class because in this class more than 1 girls exist.',

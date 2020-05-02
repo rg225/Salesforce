@@ -18,7 +18,7 @@ public class TestAccountUtil {
         Account act = [SELECT ContactIds__c FROM Account WHERE Id =: acct.Id];
         
         // Compare the ecpected and actual 
-        system.assertEquals(string.valueOf(cont.Id), act.ContactIds__c);
+        System.assertEquals(string.valueOf(cont.Id), act.ContactIds__c);
     } 
     
     // Test when contactId of account field is not null
@@ -47,6 +47,6 @@ public class TestAccountUtil {
         
         // Compare the ecpected and actual 
         String allContactIds = cont1.Id +','+ cont2.Id ;
-        system.assertEquals(allContactIds, act.ContactIds__c);
+        System.assertEquals(allContactIds, act.ContactIds__c);
     } 
 }
