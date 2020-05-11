@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<contacts>
+    <contact>
+        <fname>Prakash</fname>
+        <lname>Gyamlani</lname>
+        <mailingCity>Jaipur</mailingCity>
+        <mailingState>Rajasthan</mailingState>
+        <mailingCountry>India</mailingCountry>
+    </contact>
+    <contact>
+        <fname>Gopal</fname>
+        <lname>Gupta</lname>
+        <mailingCity>Jaipur</mailingCity>
+        <mailingState>Rajasthan</mailingState>
+        <mailingCountry>India</mailingCountry>
+    </contact>
+    <contact>
+        <fname>Prakhar</fname>
+        <lname>golania</lname>
+        <mailingCity>Jaipur</mailingCity>
+        <mailingState>Rajasthan</mailingState>
+        <mailingCountry>India</mailingCountry>
+    </contact>
+    <contact>
+        <fname>Ayush</fname>
+        <lname>pandey</lname>
+        <mailingCity>Jaipur</mailingCity>
+        <mailingState>Rajasthan</mailingState>
+        <mailingCountry>India</mailingCountry>
+    </contact>
+    <contact>
+        <fname>Himanshu</fname>
+        <lname>singh</lname>
+        <mailingCity>Jaipur</mailingCity>
+        <mailingState>Rajasthan</mailingState>
+        <mailingCountry>India</mailingCountry>
+    </contact>
+</contacts>
