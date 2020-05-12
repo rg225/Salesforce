@@ -24,11 +24,12 @@ global class ContactInboundEmailXML implements Messaging.InboundEmailHandler {
         try {
             if(!completeContactList.isEmpty()){
                 insert completeContactList;
+                result.message = 'Contacts inserted successfuly';
             }
             result.success = true;
         } catch(DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
             result.success = false;
+            result.message = 'The following exception has occurred: ' + e.getMessage();
         }
         return result;
     }
