@@ -21,12 +21,15 @@ global class ContactInboundEmailXML implements Messaging.InboundEmailHandler {
             }
         }
         
-        // To insert the contact in org
-        if(!completeContactList.isEmpty()){
-            insert completeContactList;
+        try {
+            if(!completeContactList.isEmpty()){
+                insert completeContactList;
+            }
+            result.success = true;
+        } catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+            result.success = false;
         }
-        
-        result.success = true;
         return result;
     }
 }
