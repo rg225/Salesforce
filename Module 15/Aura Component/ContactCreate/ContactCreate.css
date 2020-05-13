@@ -1,0 +1,9 @@
+.THIS .contactListBox {
+    margin: 20px;
+    border: 1px solid rgb(174, 181, 181);
+}
+
+.THIS .contactListBoxTitle {
+    text-align: center;
+    font-size: 20px;
+}
