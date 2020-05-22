@@ -1,0 +1,17 @@
+<apex:page standardController="Opportunity" extensions="BillToContactController" >
+    <apex:outputText value="No manager found for {! opportunityRecord.Name} opportunity" rendered="{!opportunityRecord.Manager__c==null}" />
+    <apex:form rendered="{!opportunityRecord.Manager__c!=null}">
+        <apex:pageBlock title="Choose Bill to Contact">
+            <apex:pageBlockSection columns="1">
+                <apex:selectRadio value="{!billToContact}">
+                    <apex:selectOptions value="{!managerRelatedContacts}" />
+                </apex:selectRadio>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save" />
+                <apex:commandButton action="{!clear}" value="Clear" />
+                <apex:commandButton action="{!cancel}" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
