@@ -1,9 +1,9 @@
 <apex:page standardController="Opportunity" extensions="BillToContactController" >
-    <apex:outputText value="No manager found for {! opportunityRecord.Name} opportunity" rendered="{!opportunityRecord.Manager__c==null}" />
+    <apex:pageMessage severity="Error" summary="{!$Label.NoOpportuniyManager}" rendered="{!opportunityRecord.Manager__c==null}" strength="1"/>
     <apex:form rendered="{!opportunityRecord.Manager__c!=null}">
         <apex:pageBlock title="Choose Bill to Contact">
             <apex:pageBlockSection columns="1">
-                <apex:selectRadio value="{!billToContact}">
+                <apex:selectRadio value="{!contactId}">
                     <apex:selectOptions value="{!managerRelatedContacts}" />
                 </apex:selectRadio>
             </apex:pageBlockSection>
