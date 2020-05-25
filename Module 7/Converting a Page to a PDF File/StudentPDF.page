@@ -1,0 +1,3 @@
+<apex:page standardController="Student__c" extensions="StudentPDFController" action="{! updateAttachment }" renderAs="pdf">
+     <apex:detail relatedList="false"/>
+</apex:page>

@@ -1,0 +1,34 @@
+<apex:page controller="AccountSearchController">
+    <apex:form id="searchResult"> 
+        
+        <apex:pageBlock title="Search Account">
+            <apex:pageBlockSection >
+                <apex:inputText value="{!listOfAccountsSize}" label="Number Of Accounts to show" />
+                <apex:inputText value="{!billingCity}" label="Billing City" />
+                <apex:inputText value="{!billingState}" label="Billing State" />
+                <apex:inputText value="{!billingCountry}" label="Billing Country" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!getAccounts}" value="Search"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        
+        <apex:pageBlock >     
+            <!-- Display Accounts -->   
+            <apex:pageBlockTable value="{!listOfAccounts}" var="accountRecord">
+                <apex:column value="{!accountRecord.name}" headerValue="Account Name"/>
+                <apex:column value="{!accountRecord.billingCity}" headerValue="Billing City"/>
+                <apex:column value="{!accountRecord.billingState}" headerValue="Billing State"/>
+                <apex:column value="{!accountRecord.billingCountry}" headerValue="Billing Country"/>
+            </apex:pageBlockTable>
+            <!-- Pagination Part -->
+            Page : <apex:outputText value="{! PageNumber } Of {! CEILING(ResultSize / pageSize) }"></apex:outputText>
+            <apex:panelGrid columns="4" >
+                <apex:commandLink action="{!firstPage}" value="First" rendered="{! setController!=null && setController.HasPrevious }" />
+                <apex:commandLink action="{!lastPage}" value="Last" rendered="{! setController!=null && setController.HasNext }"  />
+                <apex:commandLink action="{!previousPage}" value="Previous" rendered="{! setController.HasPrevious }"  />
+                <apex:commandLink action="{!nextPage}" value="Next" rendered="{! setController.HasNext }" />
+            </apex:panelGrid>
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardController="Contact">
+   <apex:pageBlock >
+    <apex:pageBlockSection id="recordTitle" title="{!Contact.RecordType.Name}" collapsible="false" columns="2">
+    </apex:pageBlockSection>
+   </apex:pageBlock>
+</apex:page>

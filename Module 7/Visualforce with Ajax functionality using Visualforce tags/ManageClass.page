@@ -1,0 +1,40 @@
+<apex:page controller="ManageClassController">
+    <apex:form >
+        <apex:pageBlock title="Class List" id="classList">
+            <apex:actionStatus id="deleteActionStatus" startText="Deleting Class" stopText=""></apex:actionStatus>
+            <apex:actionStatus id="editActionStatus" startText="Opening Edit Form" stopText=""></apex:actionStatus>
+            <apex:pageBlockSection columns="1">
+                <!-- Classes List -->
+                <apex:pageBlockTable value="{!listOfClasses}" var="class">
+                    <apex:column headerValue="Actions">
+                        <apex:outputPanel onclick="setIdOfClassToBeEditted('{!class.Id}')" styleClass="btn">Edit</apex:outputPanel>
+                        <apex:outputPanel onclick="setIdOfClassToBeDeleted('{!class.Id}')" styleClass="btn">Delete</apex:outputPanel>
+                    </apex:column>
+                    <apex:column value="{!class.Name}" />
+                    <apex:column value="{!class.Board__c}" />
+                    <apex:column value="{!class.Fee__c}" />
+                    <apex:column value="{!class.Max_Size__c}" />
+                    <apex:column value="{!class.Class_Teacher__c}" />
+                </apex:pageBlockTable>
+                <apex:actionFunction name="setIdOfClassToBeEditted" reRender="classList" status="editActionStatus">
+                    <apex:param name="id" assignTo="{!classId}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction action="{!deleteClass}" name="setIdOfClassToBeDeleted" reRender="classList" status="deleteActionStatus">
+                    <apex:param name="id" assignTo="{!classId}" value="" />
+                </apex:actionFunction>
+            </apex:pageBlockSection>
+            <!-- Delete or edit page lock -->
+            <apex:pageBlockSection title="Edit or Delete Class " columns="1" collapsible="false" rendered="{!class!=null}">
+                <apex:inputField value="{!class.Name}" />
+                <apex:inputField value="{!class.Board__c}" />
+                <apex:inputField value="{!class.Fee__c}" />
+                <apex:inputField value="{!class.Class_Teacher__c}" />
+                <apex:inputField value="{!class.Max_Size__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons rendered="{!class!=null}">
+                <apex:commandButton action="{!save}" value="Save" reRender="classList" />
+                <apex:commandButton action="{!cancel}" value="Cancel" reRender="classList" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
