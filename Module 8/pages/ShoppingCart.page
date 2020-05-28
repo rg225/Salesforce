@@ -1,0 +1,156 @@
+<apex:page Controller="ShoppingCartController" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.FontAwesome,'/fontawesome-free-5.13.0-web/css/all.css')}"/>
+    <apex:form >
+        <apex:pageBlock title="Purchase Orders History" id="orders_list">
+            <!-- Orders List -->
+            <apex:pageBlockTable value="{!PurchasedOrders}" var="order">
+                <apex:column >
+                    <apex:facet name="header">
+                    	<apex:commandLink value="Order ID" action="{!sortPurchasedOrder}" reRender="orders_list" >
+                            <apex:param name="purchaseSort" value="Id" assignTo="{!purchaseSort}" />
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputText value="{! order.Id}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                    	<apex:commandLink value="Order Price" action="{!sortPurchasedOrder}" reRender="orders_list" >
+                            <apex:param name="purchaseSort" value="Order_Price__c" assignTo="{!purchaseSort}" />
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputText value="{! order.Order_Price__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                    	<apex:commandLink value="Order Status" action="{!sortPurchasedOrder}" reRender="orders_list" >
+                            <apex:param name="purchaseSort" value="Status__c" assignTo="{!purchaseSort}" />
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputText value="{! order.Status__c}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:outputText value=" Page: {!setConPurchase.PageNumber} of {! CEILING(setConPurchase.ResultSize / setConPurchase.PageSize) }"/>
+            <apex:commandButton rendered="{!setConPurchase.hasPrevious}" value="first" action="{!setConPurchase.first}" rerender="orders_list"/>
+            <apex:commandButton rendered="{!setConPurchase.hasPrevious}" value="Previous" action="{!setConPurchase.previous}" rerender="orders_list"/>
+            <apex:commandButton rendered="{!setConPurchase.hasNext}" value="next" action="{!setConPurchase.next}" rerender="orders_list"/>
+            <apex:commandButton rendered="{!setConPurchase.hasNext}" value="last" action="{!setConPurchase.last}" rerender="orders_list"/>
+        </apex:pageBlock>
+        <div align="Center">
+            <apex:commandButton value="Add New Purchase" action="{!getProductsPanel}" reRender="products_list"/>
+        </div>
+        
+        <!-- Products List -->
+        <apex:outputPanel id="products_list">
+            <apex:pageBlock title="Products" rendered="{!renderProductsTable}">
+                <apex:pageMessages id="errors" />
+                <apex:actionFunction name="searchProduct" action="{!search}" reRender="products_table,products_pagination">
+                </apex:actionFunction>
+                <table style="width: 100%"><tr>
+                   <td>
+                       <apex:inputText value="{!searchText}" html-placeholder="Search Products" onkeyup="searchProduct(this.value)" />
+                   </td>            
+                   <td align="right">
+                       <apex:commandButton value="Add To Cart" action="{!addProductsToCart}" reRender="show_cart,products_table" />
+                   </td>
+                   </tr>
+               </table>
+                <apex:outputPanel id="products_table">
+                    <apex:pageBlockTable value="{!WrapperProducts}" var="wrapperProduct" >
+                        <apex:column headerValue="Select Products">
+                            <apex:inputCheckbox value="{!wrapperProduct.selected}"/>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Product Name" action="{!sortProducts}" reRender="products_table" >
+                                    <apex:param name="productSortBy" value="Name" assignTo="{!productSortBy}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{! wrapperProduct.product.Name}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Product Code" action="{!sortProducts}" reRender="products_table" >
+                                    <apex:param name="productSortBy" value="ProductCode" assignTo="{!productSortBy}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{! wrapperProduct.product.ProductCode}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Description" action="{!sortProducts}" reRender="products_table" >
+                                    <apex:param name="productSortBy" value="Description" assignTo="{!productSortBy}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{! wrapperProduct.product.Description}"/>
+                        </apex:column>
+                        <apex:column headerValue="Available Quantity" value="{! wrapperProduct.quantity}"/>
+                    </apex:pageBlockTable> 
+                    <apex:outputText value=" Page: {!setConProduct.PageNumber} of {! CEILING(setConProduct.ResultSize / setConProduct.PageSize) }"/>
+                    <apex:commandButton rendered="{!setConProduct.hasPrevious}" value="first" action="{!setConProduct.first}" rerender="products_table"/>
+                    <apex:commandButton rendered="{!setConProduct.hasPrevious}" value="Previous" action="{!setConProduct.previous}" rerender="products_table"/>
+                    <apex:commandButton rendered="{!setConProduct.hasNext}" value="next" action="{!setConProduct.next}" rerender="products_table"/>
+                    <apex:commandButton rendered="{!setConProduct.hasNext}" value="last" action="{!setConProduct.last}" rerender="products_table"/>
+                </apex:outputPanel> 
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <!-- Show Cart -->
+        <apex:outputPanel id="show_cart">
+            <apex:pageBlock title="Cart Items" rendered="{!renderCart}">
+                <apex:pageMessages id="errors" />
+                <apex:pageBlockTable value="{!WrapperCartProducts}" var="wrapperCartProduct">
+                    <apex:column value="{! wrapperCartProduct.product.Name}" headerValue="Product Name"/>
+                    <apex:column value="{! wrapperCartProduct.product.ProductCode}" headerValue="Product Code"/>
+                    <apex:column value="{! wrapperCartProduct.product.Price_Per_Unit__c}" headerValue="Price Per Unit"/>
+                    <apex:column headerValue="Quantity">
+                        <apex:input value="{!wrapperCartProduct.productInCartQuantity}" type="number">
+                            <apex:actionSupport event="onchange" action="{! updateCartQuantity}" reRender="show_cart,products_table">
+                                <apex:param name="ProductId" assignTo="{!productId}" value="{!wrapperCartProduct.product.Id}"/>
+                            </apex:actionSupport>
+                        </apex:input>
+                    </apex:column>
+                    <apex:column headerValue="Remove Product">
+                        <apex:commandLink action="{! deleteProductFromCart}" reRender="show_cart,products_table">
+                            <apex:param name="ProductId" assignTo="{!productId}" value="{!wrapperCartProduct.product.Id}"/>
+                            <i class="fas fa-trash-alt"></i>
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable> 
+                <div align="Center">
+                    <apex:commandButton value="Checkout" action="{!showInvoice}" reRender="show_invoice,show_cart,products_list"/>
+                </div>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <!-- Show Invoice --> 
+        <apex:outputPanel id="show_invoice">
+            <apex:pageMessages id="errors" />
+            <apex:pageBlock rendered="{!renderInvoice}">
+                <div style="padding-bottom: 10px;">
+                    <apex:outputText >Invoice No. : {!invoiceNumber}</apex:outputText>
+                    <span style="float: right;">
+                        <apex:outputText >Order Date : </apex:outputText>
+                        <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                            <apex:param value="{!NOW()}" />
+                        </apex:outputText> 
+                    </span>
+                </div>
+                <apex:pageBlockTable value="{!Invoice}" var="wrapperCartProduct">
+                    <apex:column value="{! wrapperCartProduct.product.Name}" headerValue="Product Name"/>
+                    <apex:column value="{! wrapperCartProduct.product.ProductCode}" headerValue="Product Code"/>
+                    <apex:column value="{! wrapperCartProduct.productInCartQuantity}" headerValue="Quantity"/>
+                    <apex:column value="{! wrapperCartProduct.product.Price_Per_Unit__c}" headerValue="Price Per Unit"/>
+                    <apex:column value="{! wrapperCartProduct.totalProductPriceInCurrency}" headerValue="Total" />
+                </apex:pageBlockTable>
+                <div style="margin-top: 10px;" align="center">
+                    <label>TotalPrice: </label>
+                    <apex:outputText value="{! finalTotalInCurrency}"></apex:outputText>
+                </div><br/>
+                <div align="Center">
+                    <apex:commandButton value="Place Order" action="{!placeOrder}" reRender="products_list,show_invoice"/>
+                </div>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>
