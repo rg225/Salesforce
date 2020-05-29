@@ -6,17 +6,15 @@ public class PurchaseOrderSelector extends fflib_SObjectSelector {
     public Schema.SObjectType getSObjectType() {
         return PurchasedOrder__c.sObjectType;
     }
-    // Without Sorting 
-    public List<PurchasedOrder__c> getPurchaseOrderList() {   
-        return (List<PurchasedOrder__c>) Database.query(newQueryFactory().toSOQL());
+    // Without Sorting  
+    public List<PurchasedOrder__c> getPurchaseOrderList() { 
+        fflib_QueryFactory qf = newQueryFactory();
+		return (List<PurchasedOrder__c>) Database.query(qf.toSOQL());
     }
     // With Sorting
-    public List<PurchasedOrder__c> getSortedPurchaseOrderList(String sortBy, String sortDirection) {  
-        if(sortDirection == 'ASC'){
-            return (List<PurchasedOrder__c>) Database.query(newQueryFactory().setOrdering(sortBy, fflib_QueryFactory.SortOrder.ASCENDING).toSOQL());
-        }
-        else{
-         	return (List<PurchasedOrder__c>) Database.query(newQueryFactory().setOrdering(sortBy, fflib_QueryFactory.SortOrder.DESCENDING).toSOQL()); 
-        }
+    public List<PurchasedOrder__c> getSortedPurchaseOrderList(String sortBy, fflib_QueryFactory.SortOrder sortDirection) { 
+        fflib_QueryFactory qf = newQueryFactory();
+        qf.setOrdering(sortBy, sortDirection);
+        return (List<PurchasedOrder__c>) Database.query(qf.toSOQL());
     }
 }

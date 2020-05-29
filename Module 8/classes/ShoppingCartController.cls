@@ -1,4 +1,4 @@
-public class ShoppingCartController {
+public class ShoppingCartController { 
     public boolean renderProductsTable{get; set;}
     public boolean renderCart{get; set;}
     public boolean renderInvoice{get; set;}
@@ -13,10 +13,11 @@ public class ShoppingCartController {
     public List<Product2> selectedProductsList{get;set;}
     public String purchaseSort{get;set;}
     public String productSortBy{get;set;}
-    public String sortDirection = 'DESC';
+    public fflib_QueryFactory.SortOrder sortDirection;
     
     // ShoppingCartController Constructor
     public ShoppingCartController(){
+        sortDirection = fflib_QueryFactory.SortOrder.DESCENDING;
         isCartEmpty = false;
         renderProductsTable = false;
         renderCart = false;
@@ -58,13 +59,13 @@ public class ShoppingCartController {
     // Sort the purchased order table 
     public void sortPurchasedOrder(){
         setConPurchase = null;
-        sortDirection = (sortDirection == 'ASC') ? 'DESC' : 'ASC';
+        sortDirection = (sortDirection == fflib_QueryFactory.SortOrder.ASCENDING) ? fflib_QueryFactory.SortOrder.DESCENDING : fflib_QueryFactory.SortOrder.ASCENDING;
     }
     
     // Sort the purchased order table 
     public void sortProducts(){
         setConProduct = null;
-        sortDirection = (sortDirection == 'ASC') ? 'DESC' : 'ASC';
+        sortDirection = (sortDirection == fflib_QueryFactory.SortOrder.ASCENDING) ? fflib_QueryFactory.SortOrder.DESCENDING : fflib_QueryFactory.SortOrder.ASCENDING;
     }
     
     // To display Product table
@@ -78,12 +79,12 @@ public class ShoppingCartController {
     }
     
     // return list of WrapperProducts
-    public List<WrapperProducts> getWrapperProducts(){
-        productSelected();
+    public List<ShoppingCartService.WrapperProducts> getWrapperProducts(){
+        getSelectedProducts();
         return shoppingCartServiceObj.getWrapperProductsList((List<Product2>) setConProduct.getRecords());
     }
     
-    public void productSelected(){
+    private void getSelectedProducts(){
         shoppingCartServiceObj.getSelectedProducts();
     }
     
@@ -94,7 +95,7 @@ public class ShoppingCartController {
     
     // To add products
     public void addProductsToCart(){
-        productSelected();
+        getSelectedProducts();
         Integer quantity = 1;
         Boolean status = shoppingCartServiceObj.addProductsToCart(quantity);
         if(status == true ){
@@ -109,15 +110,15 @@ public class ShoppingCartController {
     public void updateCartQuantity(){
         shoppingCartServiceObj.updateCartQuantity(productId);
     }
-    public List<WrapperCart> getWrapperCartProducts(){
+    public List<ShoppingCartService.WrapperCart> getWrapperCartProducts(){
         return shoppingCartServiceObj.getWrapperCartProductsList();
     }
-    
+     
     // To remove products from the cart
     public void deleteProductFromCart(){
         shoppingCartServiceObj.deleteProductFromCart(productId);
-        if(shoppingCartServiceObj.cartProductsQuantityMap.values().size() == 0){
-            renderCart = false;   
+        if(shoppingCartServiceObj.isCartEmpty()){
+            renderCart = false;
         }
     }
     // Show invoice block when user click on checkout and hide other
@@ -126,9 +127,11 @@ public class ShoppingCartController {
         renderProductsTable = false;
         renderInvoice = true;
     }
-    
+    public List<Product2> getProducts(){
+        return (List<Product2>) setConProduct.getRecords();
+    }
     // supply invoice data
-    public List<WrapperCart> getInvoice(){
+    public List<ShoppingCartService.WrapperCart> getInvoice(){
         Integer tempInvoiceNumber = Integer.valueof(invoiceNumber) + 1; 
         invoiceNumber = String.valueOf(tempInvoiceNumber);
         finalTotal = shoppingCartServiceObj.finalTotalPriceOfCart();

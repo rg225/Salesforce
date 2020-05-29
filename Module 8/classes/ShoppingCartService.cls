@@ -12,9 +12,30 @@ public class ShoppingCartService {
         productsQuantityMap = new Map<Id,Integer>();
         cartProductsQuantityMap = new Map<Id,Integer>();
     }
-    
+    public class WrapperProducts {
+        public Product2 product {get; set;}
+        public Boolean selected {get; set;}
+        public Integer quantity {get; set;}
+        public WrapperProducts(Product2 prod, Boolean bool) {
+            product = prod;
+            quantity = (Integer)prod.Quantity_Available__c;
+            selected = bool;
+        }
+    }
+    public class WrapperCart {
+        public Product2 product {get; set;}
+        public Integer productInCartQuantity {get; set;}
+        public Decimal totalProductPrice{get; set;}
+        public String totalProductPriceInCurrency{get; set;} 
+        public WrapperCart(Product2 prod, Integer quantity) {
+            product = prod;
+            productInCartQuantity = quantity;
+            totalProductPrice = product.Price_Per_Unit__c;
+            totalProductPriceInCurrency = '$'+totalProductPrice;
+        }
+    }
     // to get the list of purchased orders
-    public static List<PurchasedOrder__c> getPurchaseOrders(String sortBy, String sortDirection){
+    public static List<PurchasedOrder__c> getPurchaseOrders(String sortBy, fflib_QueryFactory.SortOrder sortDirection){
         if(!String.IsBlank(sortBy)){
             return new PurchaseOrderSelector().getSortedPurchaseOrderList(sortBy,sortDirection);
         }
@@ -23,7 +44,7 @@ public class ShoppingCartService {
         }
     }
     // to get the list of products
-    public static List<Product2> getProducts(String searchText, String purchaseSort, String sortDirection){
+    public static List<Product2> getProducts(String searchText, String purchaseSort, fflib_QueryFactory.SortOrder sortDirection){
         if(!(String.IsBlank(searchText) && String.IsBlank(purchaseSort))){
             return new ProductsSelector().searchProducts(searchText,purchaseSort,sortDirection);
         }
@@ -128,6 +149,14 @@ public class ShoppingCartService {
             productsQuantityMap.put(cartProductId, WrapperProductsMapClone.get(cartProductId).quantity);
             WrapperCartProductsMap.remove(cartProductId);
             cartProductsQuantityMap.remove(cartProductId);
+        }
+    }
+    public boolean isCartEmpty(){
+        if(cartProductsQuantityMap.values().size() == 0){
+            return true;
+        }
+        else{
+            return false;
         }
     }
     // to calculate the total price
