@@ -1,0 +1,9 @@
+<apex:page controller="InsertStudentController" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock title="Create New Student Record" id="recordBlock">
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:inputText value="{!firstName}"/> 
+            <apex:commandButton value="Insert Student" action="{!insertStudent}" rerender="recordBlock"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
