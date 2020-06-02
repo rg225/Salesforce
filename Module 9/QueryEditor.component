@@ -1,0 +1,30 @@
+<apex:component controller="QueryEditorComponentController">
+    <apex:attribute name="query" type="String" description="Query to be exexcuted" assignTo="{! queryToBeExecuted}"/>
+    <apex:outputPanel id="recordBlock">
+        <apex:form >
+            <apex:pageBlock title="Query Results">
+                <apex:pageMessages />
+                <apex:pageBlockTable value="{! RecordsList}" var="rec" >
+                    <apex:repeat value="{! fieldsApiNameList}" var="field">
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink action="{! sortByMethod}" reRender="recordBlock">{! field}
+                                    <apex:param assignTo="{! sortBy}" name="sortBy" value="{! field}"/>                       			
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{!rec[field]}"/>                     
+                        </apex:column>
+                    </apex:repeat>               
+                </apex:pageBlockTable>
+                <!-- Pagination -->
+               <apex:outputText value=" Page: {!setCon.PageNumber} of {! CEILING(setCon.ResultSize / setCon.PageSize) }"/>
+                <apex:commandButton rendered="{!setCon.hasPrevious}" value="first" action="{!setCon.first}"/>
+                <apex:commandButton rendered="{!setCon.hasPrevious}" value="Previous" action="{!setCon.previous}"/>
+                <apex:commandButton rendered="{!setCon.hasNext}" value="next" action="{!setCon.next}"/>
+                <apex:commandButton rendered="{!setCon.hasNext}" value="last" action="{!setCon.last}"/>
+                <apex:inputText value="{!DesiredPage}"/> 
+                <apex:commandButton value="Go" action="{!jumpToPage}" rerender="recordBlock"/>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:outputPanel>
+</apex:component>
