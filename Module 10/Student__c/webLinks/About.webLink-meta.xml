@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>About</fullName>
+    <availability>online</availability>
+    <description>To Display name and class</description>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>About</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>window.open(&#39;/apex/About?id={!Student__c.Id}&#39;, &#39;Popup&#39;, &#39;width=800, height=400, left=100, top=100&#39;)</url>
+</WebLink>

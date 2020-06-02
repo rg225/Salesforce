@@ -1,0 +1,8 @@
+<apex:page standardController="Student__c" showHeader="false" sidebar="false">
+    <apex:pageBlock title="About">
+        <table border='1px'>
+            <tr><th>Name</th><th>Class</th></tr>
+            <tr><td>{! Student__c.Name}</td><td>{! Student__c.Class__r.Name}</td></tr>                
+        </table>  
+    </apex:pageBlock>
+</apex:page>
