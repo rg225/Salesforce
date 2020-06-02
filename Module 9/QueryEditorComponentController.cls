@@ -5,10 +5,12 @@ public class QueryEditorComponentController {
     public Integer desiredPage{get;set;}
     public Boolean isSortingLinkClicked = false;
     public String sortDir {get;set;}
+    public Boolean runQuery;
     public QueryEditorComponentController(){
         queryToBeExecuted = '';
         sortBy = '';
         sortDir = 'ASC';
+        runQuery = true;
     }
     public ApexPages.StandardSetController setCon{
         get{
@@ -52,29 +54,40 @@ public class QueryEditorComponentController {
             return null;
         }
     }
+    @TestVisible
     private String createQuery(String query){
-        String orderedQuery = query;       
-        if(isSortingLinkClicked && String.isNotBlank(getSortBy())){
+        String orderedQuery = query;     
+        if(query.containsIgnoreCase('GROUP BY')){
+            runQuery = false;
+        }
+        else if(isSortingLinkClicked && String.isNotBlank(getSortBy())){
             if(query.containsIgnoreCase('ORDER BY')){
                 orderedQuery = orderedQuery.substring(0, query.indexOfIgnoreCase('ORDER BY') - 1);
             }
             sortDir = sortDir.equals('ASC') ? 'DESC' : 'ASC';
             orderedQuery = orderedQuery + ' ORDER BY ' + getSortBy() + ' ' + sortDir;
             queryToBeExecuted = orderedQuery;
-        }
+        }  
         return orderedQuery;
     }
+    @TestVisible
     private List<sObject> executeQuery(String query){
         String orderedQuery = createQuery(query);
         List<sObject> sObjectList = new List<sObject>();
-        try{
-            sObjectList = Database.query(orderedQuery);
-            
+        if(runQuery){
+            try{
+                sObjectList = Database.query(orderedQuery);
+            }
+            catch(Exception excp){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Enter a valid query')); 
+                return null;
+            }
         }
-        catch(Exception excp){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Enter a valid query')); 
+        else{
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'GROUP BY clause is not supported')); 
             return null;
         }
+        
         return sObjectList;
     }
     public List<sObject> getDisplayFields(String query){
